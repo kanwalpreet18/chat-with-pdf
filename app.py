@@ -9,6 +9,8 @@ from langchain.memory import ConversationBufferMemory
 from langchain.chains import ConversationalRetrievalChain
 from htmlTemplates import css, bot_template, user_template
 from langchain.llms import HuggingFaceHub
+import time
+
 
 def get_pdf_text(pdf_docs):
     text = ""
@@ -21,10 +23,10 @@ def get_pdf_text(pdf_docs):
 
 def get_text_chunks(text):
     text_splitter = CharacterTextSplitter(
-        separator="\n",
-        chunk_size=1000,
-        chunk_overlap=200,
-        length_function=len
+        separator = "\n",
+        chunk_size = 2000,
+        chunk_overlap = 250,
+        length_function = len
     )
     chunks = text_splitter.split_text(text)
     return chunks
@@ -66,8 +68,8 @@ def handle_userinput(user_question):
 
 def main():
     load_dotenv()
-    st.set_page_config(page_title="Chat with multiple PDFs",
-                       page_icon=":books:")
+    st.set_page_config(page_title = "Chat with multiple PDFs",
+                       page_icon = ":books:")
     st.write(css, unsafe_allow_html=True)
 
     if "conversation" not in st.session_state:
@@ -76,7 +78,7 @@ def main():
         st.session_state.chat_history = None
 
     st.header("Chat with multiple PDFs :books:")
-    user_question = st.text_input("Ask a question about your documents:")
+    user_question = st.text_input("Ask a question to query your PDFs:")
     if user_question:
         handle_userinput(user_question)
 
@@ -91,13 +93,13 @@ def main():
 
                 # get the text chunks
                 text_chunks = get_text_chunks(raw_text)
-
                 # create vector store
                 vectorstore = get_vectorstore(text_chunks)
 
                 # create conversation chain
                 st.session_state.conversation = get_conversation_chain(
                     vectorstore)
+        
 
 
 if __name__ == '__main__':

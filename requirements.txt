@@ -1,10 +1,12 @@
-langchain==0.0.184
-PyPDF2==3.0.1
-python-dotenv==1.0.0
-streamlit==1.18.1
-openai==0.27.6
-faiss-cpu==1.7.4
-tiktoken==0.4.0
+langchain
+altair
+PyPDF2
+python-dotenv
+streamlit
+openai
+faiss-cpu
+tiktoken
+
 
 # uncomment to use huggingface llms
 # huggingface-hub==0.14.1

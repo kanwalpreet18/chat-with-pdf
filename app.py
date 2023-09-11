@@ -11,6 +11,7 @@ from htmlTemplates import css, bot_template, user_template
 from langchain.llms import HuggingFaceHub
 import time
 from langchain.callbacks import get_openai_callback
+import pinecone
 
 def get_pdf_text(pdf_docs):
     text = ""

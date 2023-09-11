@@ -6,7 +6,7 @@ streamlit
 openai
 faiss-cpu
 tiktoken
-
+pinecone-client
 
 # uncomment to use huggingface llms
 # huggingface-hub==0.14.1

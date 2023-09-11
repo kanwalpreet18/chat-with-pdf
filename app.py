@@ -31,8 +31,22 @@ def get_text_chunks(text):
 
 def get_vectorstore(text_chunks):
     embeddings = OpenAIEmbeddings()
+
+    # using pinecone
+    pinecone.init(
+        api_key = os.environ.get("PINCONE_API_KEY"),  # find at app.pinecone.io
+        environment = os.environ.get('PINECONE_ENV'),  # next to api key in console
+    )
+
+    my_index_name = "topic-modeling"
+    index = pinecone.Index(my_index_name)
+    # index.delete(delete_all='true')
+
+    vectorstore = Pinecone.from_documents(documents = text_chunks, embedding = embeddings, index_name = my_index_name)
+
+    
     # embeddings = HuggingFaceInstructEmbeddings(model_name="hkunlp/instructor-xl")
-    vectorstore = FAISS.from_texts(texts=text_chunks, embedding=embeddings)
+    # vectorstore = FAISS.from_texts(texts=text_chunks, embedding=embeddings)
     return vectorstore
 
 def get_conversation_chain(vectorstore):
